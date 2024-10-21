@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Payment from "./Payment";
+import Payment from "./Payment2";
+import PaymentModal from "./Modal";
 
 function Header(props) {
   return (
@@ -18,7 +19,7 @@ function Header(props) {
           ) : (
             <Fragment>
               <li>
-                <Payment />
+                <PaymentModal />
               </li>
               <li style={{ margin: "0 7px" }}>{props.auth.credits} Credits</li>
               <li>

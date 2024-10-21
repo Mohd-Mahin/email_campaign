@@ -25,6 +25,7 @@ const { isAuth } = require("./middleware/auth");
 //     keys: [COOKIE_KEY],
 //   })
 // );
+app.use(express.json());
 app.use(
   session({
     secret: COOKIE_KEY,
@@ -51,6 +52,7 @@ app.get("/api/logout", (req, res, next) => {
   });
 });
 
+// payment approach 1 with page reloading
 app.post("/api/create-checkout-session", isAuth, async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -80,6 +82,32 @@ app.post("/api/create-checkout-session", isAuth, async (req, res) => {
     res.send({ ...user, sessionId: session.id });
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+// payment approach 2 without page reloading
+app.post("/api/create-payment-intent", async (req, res) => {
+  console.log(req.body, typeof req.body);
+  const { paymentMethodId } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 500, // Amount in cents ($50.00)
+      currency: "usd",
+      payment_method: paymentMethodId,
+      confirm: true,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: "never",
+      },
+    });
+
+    req.user.credits += 5;
+    const user = await req.user.save();
+
+    res.send({ success: true, ...user });
+  } catch (error) {
+    res.send({ error: error.message });
   }
 });
 
