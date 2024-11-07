@@ -4,7 +4,7 @@ module.exports = {
   MONGO_URI: process.env.MONGO_URI,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-  HOST_KEY: "",
+  HOST_KEY: "https://email-campaign-na5c.onrender.com",
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
 };
