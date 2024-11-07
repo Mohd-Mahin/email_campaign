@@ -1,4 +1,5 @@
 const express = require("express");
+const { isAuth } = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/logout", (req, res, next) => {

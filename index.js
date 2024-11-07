@@ -18,7 +18,6 @@ require("./services/passport");
 
 const authRoutes = require("./routes/authRoutes");
 const apiRoutes = require("./routes/apiRoutes");
-const { isAuth } = require("./middleware/auth");
 
 // app.use(
 //   cookieSession({
