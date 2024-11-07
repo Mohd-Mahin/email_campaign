@@ -115,6 +115,16 @@ app.get("/api/user", (req, res) => {
   res.send(req.user);
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("cliient/build"));
+
+  const path = require("path");
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
