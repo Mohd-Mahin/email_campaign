@@ -118,10 +118,10 @@ app.get("/api/user", (req, res) => {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("cliient/build"));
 
-  const path = require("path");
-
+  const root = require("path").join(__dirname, "client", "build");
+  app.use(express.static(root));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile("index.html", { root });
   });
 }
 
