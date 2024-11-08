@@ -1,13 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const cookieSession = require("cookie-session");
 const session = require("express-session");
 const passport = require("passport");
 
-const Stripe = require("stripe");
-const keys = require("./config/keys");
-
-const stripe = Stripe(keys.stripeSecretKey);
 const { MONGO_URI, COOKIE_KEY } = require("./config/keys");
 
 mongoose.connect(MONGO_URI).then(() => console.log("Mongo db Connected!"));
@@ -17,14 +12,8 @@ const app = express();
 require("./services/passport");
 
 const authRoutes = require("./routes/authRoutes");
-const apiRoutes = require("./routes/apiRoutes");
+const billingRoutes = require("./routes/billingRoutes");
 
-// app.use(
-//   cookieSession({
-//     expires: 30 * 24 * 60 * 60 * 1000,
-//     keys: [COOKIE_KEY],
-//   })
-// );
 app.use(express.json());
 app.use(
   session({
@@ -37,7 +26,21 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRoutes);
-app.use("/api", apiRoutes);
+app.use("/api", billingRoutes);
+
+app.get("/api/logout", (req, res, next) => {
+  req.session.user = null;
+  req.session.save(function (err) {
+    if (err) next(err);
+
+    // regenerate the session, which is good practice to help
+    // guard against forms of session fixation
+    req.session.regenerate(function (err) {
+      if (err) next(err);
+      res.redirect("/");
+    });
+  });
+});
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("cliient/build"));
