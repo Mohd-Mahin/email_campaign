@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Payment from "./Payment2";
+// import Payment from "./Payment2";
 import PaymentModal from "./Modal";
 
 function Header(props) {
@@ -12,11 +12,7 @@ function Header(props) {
           Emaily
         </Link>
         <ul className="right">
-          {!props.auth ? (
-            <li>
-              <a href="/auth/google">Login with Google</a>
-            </li>
-          ) : (
+          {Object.keys(props.auth).length ? (
             <Fragment>
               <li>
                 <PaymentModal />
@@ -26,6 +22,10 @@ function Header(props) {
                 <a href="/api/logout">Logout</a>
               </li>
             </Fragment>
+          ) : (
+            <li>
+              <a href="/auth/google">Login with Google</a>
+            </li>
           )}
         </ul>
       </div>

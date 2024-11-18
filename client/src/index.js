@@ -7,7 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import { thunk } from "redux-thunk";
 import reducers from "./reducers";
-
+// for local testing
+import axios from "axios";
+window.axios = axios;
 const store = createStore(reducers, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

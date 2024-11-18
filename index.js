@@ -13,6 +13,7 @@ require("./services/passport");
 
 const authRoutes = require("./routes/authRoutes");
 const billingRoutes = require("./routes/billingRoutes");
+const surveyRoutes = require("./routes/surveyRoutes");
 
 app.use(express.json());
 app.use(
@@ -27,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/api", billingRoutes);
+app.use("/api", surveyRoutes);
 
 app.get("/api/logout", (req, res, next) => {
   req.session.user = null;
