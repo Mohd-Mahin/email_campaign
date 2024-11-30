@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 
 import Header from "./components/Header";
 import Landing from "./components/Landing";
+import Dashboard from "./components/dashboard";
+import SurveyNew from "./components/surveys/surveyNew";
 import * as actions from "./actions";
-
-const Dashboard = () => <div>Dashboard</div>;
-const SurveyNew = () => <div>SurveyNew</div>;
 
 function App(props) {
   useEffect(() => {
@@ -18,11 +17,13 @@ function App(props) {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" Component={Landing} />
-          <Route path="/surveys" Component={Dashboard} />
-          <Route path="/surveys/new" Component={SurveyNew} />
-        </Routes>
+        <div className="container">
+          <Routes>
+            <Route path="/" Component={Landing} />
+            <Route path="/surveys" Component={Dashboard} />
+            <Route path="/surveys/new" Component={SurveyNew} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );
