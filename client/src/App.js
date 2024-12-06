@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Header from "./components/Header";
 import Landing from "./components/Landing";
@@ -8,9 +8,10 @@ import Dashboard from "./components/dashboard";
 import SurveyNew from "./components/surveys/surveyNew";
 import * as actions from "./actions";
 
-function App(props) {
+function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
-    props.fetchUser();
+    dispatch(actions.fetchUser());
   }, []);
 
   return (
@@ -29,4 +30,4 @@ function App(props) {
   );
 }
 
-export default connect(null, actions)(App);
+export default App;

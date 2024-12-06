@@ -1,14 +1,13 @@
 import React from "react";
-import { Field, Form, FormSpy } from "react-final-form";
-import { useDispatch } from "react-redux";
+import { Field, Form } from "react-final-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import { updateFormState } from "../../actions";
 import validateEmail from "../../utils/validateEmail";
 import SurveyField from "./surveyField";
 
-const formInitialValues = { title: "" };
-
-const formConfig = [
+export const formConfig = [
   {
     name: "title",
     label: "Survey Title",
@@ -45,10 +44,13 @@ const formValidate = (values) => {
   return errors;
 };
 
-export default function SurveyForm() {
+export default function SurveyForm(props) {
+  const { onSurveySubmit } = props;
+  const formState = useSelector((state) => state.forms);
   const dispatch = useDispatch();
   const onFormSubmit = (values) => {
-    console.log("form values", values);
+    dispatch(updateFormState("mailerFormData", values));
+    onSurveySubmit();
   };
 
   const formFields = () =>
@@ -68,7 +70,7 @@ export default function SurveyForm() {
     <Form
       onSubmit={onFormSubmit}
       validate={formValidate}
-      initialValues={formInitialValues}
+      initialValues={formState.mailerFormData}
       render={({
         handleSubmit,
         form,
@@ -80,24 +82,20 @@ export default function SurveyForm() {
         return (
           <form onSubmit={handleSubmit}>
             <div>{formFields()}</div>
-            <FormSpy
-              subscription={{ values: true }}
-              onChange={(state) =>
-                dispatch(updateFormState("mailer", state.values))
-              }
-            />
             <Link
               to="/surveys"
               className="red btn-flat white-text"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 20, outline: "1px dotted red" }}
+              tabIndex={0}
             >
               Cancel
             </Link>
             <button
-              style={{ marginTop: 20 }}
               className="teal btn-flat right white-text"
+              style={{ marginTop: 20, outline: "1px dotted teal" }}
               type="submit"
-              disabled={submitting || pristine || invalid}
+              disabled={submitting || invalid}
+              tabIndex={0}
             >
               Next
               <i className="material-icons right">done</i>

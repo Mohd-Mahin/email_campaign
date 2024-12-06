@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-export default function Dashboard() {
+import * as actions from "../actions";
+
+function Dashboard(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.fetchUser()); // todo
+  }, []);
+
   return (
     <div className="container">
       <h1>dashboard</h1>
-      <div class="fixed-action-btn">
+      <div className="fixed-action-btn">
         <Link
           to="/surveys/new"
-          class="btn-floating btn-large waves-effect waves-light red right"
+          className="btn-floating btn-large waves-effect waves-light red right"
         >
-          <i class="material-icons">add</i>
+          <i className="material-icons">add</i>
         </Link>
       </div>
     </div>
   );
 }
+
+export default Dashboard;
