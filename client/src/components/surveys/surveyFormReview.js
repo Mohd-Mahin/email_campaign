@@ -31,10 +31,9 @@ function SurveyFormReview(props) {
     });
   };
 
-  if (loading) return <Loader />;
-
   return (
     <div>
+      {loading && <Loader />}
       {/* <pre>{JSON.stringify(mailerFormData, null, 2)}</pre> */}
       <table>
         <thead className="red darken-3">

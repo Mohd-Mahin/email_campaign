@@ -1,15 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-import * as actions from "../actions";
-
-function Dashboard(props) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.fetchUser()); // todo
-  }, []);
-
+function Dashboard() {
   return (
     <div className="container">
       <h1>dashboard</h1>

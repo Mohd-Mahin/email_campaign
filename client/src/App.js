@@ -7,6 +7,7 @@ import Landing from "./components/Landing";
 import Dashboard from "./components/dashboard";
 import SurveyNew from "./components/surveys/surveyNew";
 import * as actions from "./actions";
+import RestrictedRoute from "./components/restricted-route";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,8 +22,14 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/" Component={Landing} />
-            <Route path="/surveys" Component={Dashboard} />
-            <Route path="/surveys/new" Component={SurveyNew} />
+            <Route
+              path="/surveys"
+              element={<RestrictedRoute component={Dashboard} />}
+            />
+            <Route
+              path="/surveys/new"
+              element={<RestrictedRoute component={SurveyNew} />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

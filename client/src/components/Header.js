@@ -1,23 +1,24 @@
 import React, { Fragment } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import Payment from "./Payment2";
 import PaymentModal from "./Modal";
 
 function Header(props) {
+  const auth = useSelector((state) => state.auth);
   return (
     <nav>
       <div className="nav-wrapper">
-        <Link to={props.auth ? "/surveys" : "/"} className="left-brand-logo">
+        <Link to={auth ? "/surveys" : "/"} className="left-brand-logo">
           Emaily
         </Link>
         <ul className="right">
-          {Object.keys(props.auth).length ? (
+          {auth && Object.keys(auth).length ? (
             <Fragment>
               <li>
                 <PaymentModal />
               </li>
-              <li style={{ margin: "0 7px" }}>{props.auth.credits} Credits</li>
+              <li style={{ margin: "0 7px" }}>{auth.credits} Credits</li>
               <li>
                 <a href="/api/logout">Logout</a>
               </li>
@@ -33,10 +34,4 @@ function Header(props) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  };
-}
-
-export default connect(mapStateToProps)(Header);
+export default Header;
