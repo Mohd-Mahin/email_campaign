@@ -38,6 +38,14 @@ router.post("/surveys", isAuth, checkCredits, async (req, res) => {
   }
 });
 
+router.get("/surveys", isAuth, async (req, res) => {
+  const survey = await Survey.find({
+    _user: req.user.id,
+  }).select({ recipients: 0 });
+
+  res.send(survey);
+});
+
 router.get("/surveys/:surveyId/:response", (req, res) => {
   res.send("Thanks for voting!!!");
 });

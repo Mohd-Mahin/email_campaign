@@ -4,6 +4,9 @@ import {
   UPDATE_FORM_STATE,
   CREATE_POST_FAILURE,
   CREATE_POST_REQUEST,
+  FETCH_SURVEY,
+  FETCH_SURVEY_LOADING,
+  FETCH_SURVEY_FAILURE,
 } from "./types";
 
 export const fetchUser = () => async (dispatch) => {
@@ -23,5 +26,16 @@ export const sendMail = (formValue) => async (dispatch) => {
     dispatch({ type: FETCH_USER, payload: res.data });
   } catch (error) {
     dispatch({ type: CREATE_POST_FAILURE, payload: error });
+  }
+};
+
+export const fetchSurvey = () => async (dispatch) => {
+  dispatch({ type: FETCH_SURVEY_LOADING });
+
+  try {
+    const res = await axios.get("/api/surveys");
+    dispatch({ type: FETCH_SURVEY, payload: res.data });
+  } catch (error) {
+    dispatch({ type: FETCH_SURVEY_FAILURE, payload: error });
   }
 };
